@@ -1,0 +1,64 @@
+[version]
+Signature="$Chicago$"
+Class=base
+Version=2.5
+
+[DefaultInstall]
+AddReg=dsk.addreg
+DelReg=dsk.delreg1
+CopyFiles=dsk.copy,inf.copy
+
+[DefaultUninstall]
+DelReg=dsk.delreg
+DelFiles=dsk.del
+
+[SourceDisksNames]
+1="Password Viewer Explorer band - Disk 1",,
+
+[SourceDisksFiles]
+pwdviewbands.inf=1
+pwdviewbands.ocx=1
+
+[DestinationDirs]
+inf.copy=17
+dsk.copy=11
+
+[dsk.copy]
+pwdviewbands.ocx
+
+[inf.copy]
+pwdviewbands.inf
+
+[dsk.del]
+pwdviewbands.inf
+pwdviewbands.ocx
+
+[dsk.addreg]
+
+; Add uninstall keys
+HKLM,"Software\Microsoft\Windows\CurrentVersion\Uninstall\{90D31F11-99D1-4DDF-924E-F1D266145AFD}","DisplayName",,"Password Viewer Explorer Band"
+HKLM,"Software\Microsoft\Windows\CurrentVersion\Uninstall\{90D31F11-99D1-4DDF-924E-F1D266145AFD}","UninstallString",,"RunDll32 advpack.dll,LaunchINFSection %17%\pwdviewbands.inf,DefaultUninstall"
+
+; Register vertical explorer band
+HKLM,"Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved","{90D31F11-99D1-4DDF-924E-F1D266145AFD}",,"Password Viewer - Exporer Band"
+HKCR,"CLSID\{90D31F11-99D1-4DDF-924E-F1D266145AFD}",,,"&Password Viewer"
+HKCR,"CLSID\{90D31F11-99D1-4DDF-924E-F1D266145AFD}\InprocServer32",,,"%11%\pwdviewbands.ocx"
+HKCR,"CLSID\{90D31F11-99D1-4DDF-924E-F1D266145AFD}\InprocServer32","ThreadingModel",,"Apartment"
+; {00021493-0000-0000-C000-000000000046} = Vertical Explorer Band category
+HKCR,"CLSID\{90D31F11-99D1-4DDF-924E-F1D266145AFD}\Implemented Categories\{00021493-0000-0000-C000-000000000046}"
+
+[dsk.delreg]
+
+; Remove Uninstall key
+HKLM,"Software\Microsoft\Windows\CurrentVersion\Uninstall\{90D31F11-99D1-4DDF-924E-F1D266145AFD}"
+
+; Remove vetical band
+HKLM,"Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Approved","{90D31F11-99D1-4DDF-924E-F1D266145AFD}"
+HKCR,"CLSID\{90D31F11-99D1-4DDF-924E-F1D266145AFD}"
+
+[dsk.delreg1]
+
+; The following keys are removed to avoid the UserControls
+; from showing in the components dialog
+HKCR,"CLSID\{90D31F11-99D1-4DDF-924E-F1D266145AFD}\control"
+HKCR,"CLSID\{90D31F11-99D1-4DDF-924E-F1D266145AFD}\Implemented Categories"
